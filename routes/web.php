@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Electricity\BillController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,10 +17,35 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\User\AuthController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', );
 
-Route::any('/login', [AuthController::class, 'login'])->name('auth.login');
+Route::any('/', [AuthController::class, 'login'])->name('auth.login');
+Route::get('/login', function () {
+    return redirect('/');
+});
 Route::get('/profile', [AuthController::class, 'profile'])->name('auth.profile');
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+
+// Bill management application - CURD (Create,update,read, delete)
+Route::get('/bill', [BillController::class, 'index'])->name('bill.index');
+Route::get('/bill/create', [BillController::class, 'create'])->name('bill.create');
+Route::post('/bill/store', [BillController::class, 'store'])->name('bill.store');
+Route::get('/bill/show/{id}', [BillController::class, 'show'])->name('bill.show');
+Route::get('/admin/bill/edit/{id}', [BillController::class, 'edit'])->name('bill.edit')->middleware('isAdmin');
+Route::post('/bill/update/{id}', [BillController::class, 'update'])->name('bill.update');
+Route::get('/bill/delete/{id}', [BillController::class, 'destroy'])->name('bill.destroy');
+
+// blade templating
+Route::get('/template',function(){
+    return view('template.page');
+});
+Route::get('/templatelogin',function(){
+    return view('template.login');
+});
+
+
+
+
+
+

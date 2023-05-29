@@ -18,6 +18,7 @@
                     Hello {{$user->name}}!
                 </h1>
                 <p>Email: {{$user->email}}</p>
+                <p>Role: {{$user->role}}</p>
                 <a href="{{ route('auth.logout') }}" class="text-blue-300">Logout</a>
             </div>
         </header>

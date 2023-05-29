@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('kt123'),
             'phone' => '99999999',
             'age' => '33',
+            'role'=>'admin'
         ]);
         DB::table('users')->insert([
             'name' => 'Ramu',
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('ramu123'),
             'phone' => '988888',
             'age' => '22',
+            'role'=>'moderator'
         ]);
         DB::table('users')->insert([
             'name' => 'Manohar',
