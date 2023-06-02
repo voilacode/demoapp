@@ -1,4 +1,7 @@
-@include('layouts.head')
+@extends('layouts.app')
+@section('content')
+
+<x-alert>Hello Edit</x-alert>
 <div class="border border-secondary p-4">
     <h1> Update the item</h1>
     <form action="{{ route('bill.update',$data->id) }}" method="post">
@@ -16,4 +19,5 @@
         <a href="{{ route('bill.index') }}"><button type="button" class="btn btn-danger">back to index</button></a>
     </form>
 </div>
-@include('layouts.footer')
+
+@endsection

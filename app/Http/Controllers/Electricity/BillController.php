@@ -16,7 +16,10 @@ class BillController extends Controller
     {
         $records = Bill::get();
         $user = Auth::user();
-        return view('bill.index')->with('records', $records)->with('user',$user);
+        $bill = new Bill();
+        // authorization
+        $this->authorize('viewAny', $bill);
+        return view('bill.index')->with('records', $records)->with('user', $user);
     }
 
     /**
@@ -24,6 +27,9 @@ class BillController extends Controller
      */
     public function create()
     {
+        $bill = new Bill();
+        // authorization
+        $this->authorize('create', $bill);
         return view('bill.create');
     }
 
@@ -46,6 +52,7 @@ class BillController extends Controller
         $bill->number = rand(400, 1000);
         $bill->units = $units;
         $bill->amount = $amount;
+        $bill->user_id = $request->user_id;
         $bill->due_date = '25-12-2024';
         $bill->save();
 
@@ -57,8 +64,10 @@ class BillController extends Controller
      */
     public function show(string $id)
     {
-        $data = Bill::where('id', $id)->first();
-        return view('bill.show')->with('data', $data);
+        $bill = Bill::where('id', $id)->first();
+        // authorization
+        $this->authorize('view', $bill);
+        return view('bill.show')->with('data', $bill);
     }
 
     /**
@@ -68,11 +77,10 @@ class BillController extends Controller
     {
         $user = Auth::user();
 
-        if($user->role=='user' )
-            abort('403','You dont have permission to edit');
-
-        $data = Bill::where('id', $id)->first();
-        return view('bill.edit')->With('data', $data);
+        $bill = Bill::where('id', $id)->first();
+        // authorization
+        $this->authorize('update', $bill);
+        return view('bill.edit')->With('data', $bill);
     }
 
     /**

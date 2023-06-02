@@ -17,6 +17,7 @@ return new class extends Migration
             $table->double('units');
             $table->double('amount');
             $table->string('due_date');
+            $table->integer('user_id');
             $table->timestamps(); // created_at and updated_at
         });
     }
